@@ -1,0 +1,26 @@
+[
+  {
+    "model": "core.category",
+    "pk": 1,
+    "fields": {
+      "name": "Default",
+      "description": "Default category"
+    }
+  },
+  {
+    "model": "core.product",
+    "pk": 1,
+    "fields": {
+      "category": 1,
+      "name": "Sample Product",
+      "description": "A sample",
+      "info": {
+        "photo": "",
+        "size": "M"
+      },
+      "price": "19.99",
+      "iva": "1.50",
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  }
+]
