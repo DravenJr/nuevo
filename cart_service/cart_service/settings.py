@@ -23,7 +23,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 ]
-ROOT_URLCONF = 'cart_service.urls'
+ROOT_URLCONF = 'auth_service.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -39,7 +39,7 @@ TEMPLATES = [
         },
     },
 ]
-WSGI_APPLICATION = 'cart_service.wsgi.application'
+WSGI_APPLICATION = 'auth_service.wsgi.application'
 
 DATABASES = {
     'default': {
@@ -51,6 +51,7 @@ DATABASES = {
         'PORT': os.environ.get('DB_PORT', '3306'),
     }
 }
+
 AUTH_PASSWORD_VALIDATORS = []
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
@@ -66,6 +67,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     )
 }
+
 from datetime import timedelta
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
