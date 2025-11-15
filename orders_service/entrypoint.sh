@@ -11,4 +11,4 @@ echo "Aplicando migraciones..."
 python manage.py migrate --noinput
 
 echo "Iniciando Gunicorn..."
-exec gunicorn products_service.wsgi:application --bind 0.0.0.0:8000
+exec gunicorn orders_service.wsgi:application --bind 0.0.0.0:8000
