@@ -1,24 +1,33 @@
 FROM python:3.11-slim
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-#Dependencias necesarias para compilar mysqlclient
+# Dependencias necesarias para mysqlclient y mysqladmin
 RUN apt-get update && apt-get install -y \
     default-libmysqlclient-dev \
+    default-mysql-client \
     gcc \
     pkg-config \
-    --no-install-recommends
+    --no-install-recommends && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-WORKDIR /code
+# Directorio de trabajo
+WORKDIR /orders_service
 
-COPY requirements.txt /code/
+# Instalar dependencias de Python primero (para cache)
+COPY requirements.txt /orders_service/
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . /code/
+# Copiar proyecto completo
+COPY . /orders_service/
 
-RUN chmod +x /code/entrypoint.sh
+# Dar permisos al entrypoint
+RUN chmod +x /orders_service/entrypoint.sh
 
+# Exponer puerto para Gunicorn
 EXPOSE 8000
 
-CMD ["/code/entrypoint.sh"]
+# Iniciar el entrypoint
+ENTRYPOINT ["/orders_service/entrypoint.sh"]

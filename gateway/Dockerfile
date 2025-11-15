@@ -1,9 +1,17 @@
-
 FROM python:3.11-slim
-WORKDIR /code
-COPY requirements.txt /code/
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /gateway
+
+COPY requirements.txt /gateway/
 RUN pip install --no-cache-dir -r requirements.txt
-COPY . /code/
-RUN chmod +x /code/entrypoint.sh
+
+COPY . /gateway/
+
+RUN chmod +x /gateway/entrypoint.sh
+
 EXPOSE 8000
-CMD ["/code/entrypoint.sh"]
+
+ENTRYPOINT ["/gateway/entrypoint.sh"]

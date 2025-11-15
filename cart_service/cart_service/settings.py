@@ -40,6 +40,7 @@ TEMPLATES = [
     },
 ]
 WSGI_APPLICATION = 'cart_service.wsgi.application'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',

@@ -2,27 +2,21 @@
 from pathlib import Path
 import os
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','dev-secret-key')
-DEBUG = os.environ.get('DJANGO_DEBUG', '1') == '1'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+DEBUG = os.environ.get('DJANGO_DEBUG') == '1'
 ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
     'core',
 ]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
 ]
+
 ROOT_URLCONF = 'gateway.urls'
 TEMPLATES = [
     {
@@ -42,8 +36,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'gateway.wsgi.application'
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.dummy'
     }
 }
 
