@@ -1,4 +1,3 @@
-
 version: '3.8'
 services:
   mysql_auth:
@@ -37,6 +36,18 @@ services:
     volumes:
       - mysql_orders_data:/var/lib/mysql
 
+  mysql_cart:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_CART_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_CART_DATABASE}
+      MYSQL_USER: ${MYSQL_CART_USER}
+      MYSQL_PASSWORD: ${MYSQL_CART_PASSWORD}
+    ports:
+      - "${MYSQL_CART_PORT}:3306"
+    volumes:
+      - mysql_cart_data:/var/lib/mysql
+
   rabbitmq:
     image: rabbitmq:3-management
     ports:
@@ -67,6 +78,7 @@ services:
     env_file:
       - ./cart_service/.env
     depends_on:
+      - mysql_cart
       - mysql_products
       - auth_service
     ports:
@@ -99,3 +111,4 @@ volumes:
   mysql_auth_data:
   mysql_products_data:
   mysql_orders_data:
+  mysql_cart_data:

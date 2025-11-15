@@ -16,9 +16,15 @@ docker compose build
 echo "Levantando bases de datos y RabbitMQ"
 docker compose up -d mysql_auth mysql_products mysql_orders rabbitmq
 
-#Esperar 10 segundos a que las DB estén listas
+#Esperar a que MySQL esté listo
 echo "Esperando que MySQL esté listo..."
-sleep 10
+for db_service in mysql_auth mysql_products mysql_orders; do
+    echo "Esperando que $db_service esté listo..."
+    until docker compose exec $db_service mysqladmin ping -h "localhost" --silent &> /dev/null; do
+        echo "Esperando $db_service..."
+        sleep 2
+    done
+done
 
 #Levantar microservicios Django y gateway
 echo "Levantando microservicios y gateway"
@@ -32,7 +38,9 @@ done
 
 #Crear superusuario (usuario admin por defecto)
 echo "Creando superusuario admin / adminpass"
-docker compose exec auth_service python manage.py createsuperuser --noinput --username admin --email admin@example.com
+docker compose exec auth_service python manage.py shell -c "from django.contrib.auth import get_user_model; User=get_user_model(); \
+if not User.objects.filter(username='admin').exists(): \
+    User.objects.create_superuser('admin','admin@example.com','adminpass')"
 
 #Mostrar estado de los contenedores
 echo "Servicios en ejecución:"
