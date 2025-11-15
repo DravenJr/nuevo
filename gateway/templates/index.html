@@ -31,15 +31,17 @@
         li {
             margin: 5px 0;
         }
-        a {
+        a, button {
             text-decoration: none;
             color: #333;
             background-color: #e7e7e7;
             padding: 6px 12px;
             border-radius: 4px;
             display: inline-block;
+            border: none;
+            cursor: pointer;
         }
-        a:hover {
+        a:hover, button:hover {
             background-color: #007BFF;
             color: #fff;
         }
@@ -48,36 +50,146 @@
 <body>
     <h1>Gateway de Microservicios</h1>
 
+    <!-- Auth Service -->
     <div class="service">
+        <h2>Auth Service</h2>
         <ul>
-            <li><a href="/auth/api/register/">Registrarse</a></li>
-            <li><a href="/auth/api/token/">Iniciar sesión</a></li>
+            <li>
+                <button onclick="register()">Registrarse</button>
+            </li>
+            <li>
+                <button onclick="login()">Iniciar sesión</button>
+            </li>
         </ul>
     </div>
 
+    <!-- Cart Service -->
     <div class="service">
+        <h2>Cart Service</h2>
         <ul>
-            <li><a href="/cart/api/cart/">Lista de Carritos</a></li>
-            <li><a href="/cart/api/cart/1/">Detalles de Carrito</a></li>
+            <li><a href="/cart/api/cart/">Lista de Carritos (GET)</a></li>
+            <li>
+                <button onclick="createCart()">Crear Carrito (POST)</button>
+            </li>
         </ul>
     </div>
 
+    <!-- Orders Service -->
     <div class="service">
+        <h2>Orders Service</h2>
         <ul>
-            <li><a href="/orders/api/orders/">Crear Orden</a></li>
-            <li><a href="/orders/api/orders/1/">Detalles de Orden</a></li>
+            <li><a href="/orders/api/orders/">Ver Ordenes (GET)</a></li>
+            <li>
+                <button onclick="createOrder()">Crear Orden (POST)</button>
+            </li>
         </ul>
     </div>
 
+    <!-- Products Service -->
     <div class="service">
         <h2>Products Service</h2>
         <ul>
-            <li><a href="/products/api/categories/">Ver o crear categoria</a></li>
-            <li><a href="/products/api/categories/1/">Detalles de Categoría</a></li>
-            <li><a href="/products/api/products/">Ver o crear producto</a></li>
-            <li><a href="/products/api/products/1/">Detalles de Producto</a></li>
+            <li><a href="/products/api/categories/">Ver Categorías (GET)</a></li>
+            <li>
+                <button onclick="createCategory()">Crear Categoría (POST)</button>
+            </li>
+            <li><a href="/products/api/products/">Ver Productos (GET)</a></li>
+            <li>
+                <button onclick="createProduct()">Crear Producto (POST)</button>
+            </li>
         </ul>
     </div>
 
+    <script>
+        // Ejemplo simple de POST con fetch para Auth
+        function register() {
+            fetch("/auth/api/register/", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    username: "junior",
+                    password: "123456",
+                    email: "junior@email.com"
+                })
+            })
+            .then(res => res.json())
+            .then(data => alert(JSON.stringify(data)))
+            .catch(err => alert("Error: " + err));
+        }
+
+        function login() {
+            fetch("/auth/api/token/", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    username: "junior",
+                    password: "123456"
+                })
+            })
+            .then(res => res.json())
+            .then(data => alert(JSON.stringify(data)))
+            .catch(err => alert("Error: " + err));
+        }
+
+        // Ejemplo de POST para Cart
+        function createCart() {
+            fetch("/cart/api/cart/", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    user_id: 1,
+                    products: [1,2]
+                })
+            })
+            .then(res => res.json())
+            .then(data => alert(JSON.stringify(data)))
+            .catch(err => alert("Error: " + err));
+        }
+
+        // Ejemplo de POST para Orders
+        function createOrder() {
+            fetch("/orders/api/orders/", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    user_id: 1,
+                    cart_id: 1
+                })
+            })
+            .then(res => res.json())
+            .then(data => alert(JSON.stringify(data)))
+            .catch(err => alert("Error: " + err));
+        }
+
+        // Ejemplo de POST para Categories
+        function createCategory() {
+            fetch("/products/api/categories/", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    name: "Electrónica"
+                })
+            })
+            .then(res => res.json())
+            .then(data => alert(JSON.stringify(data)))
+            .catch(err => alert("Error: " + err));
+        }
+
+        // Ejemplo de POST para Products
+        function createProduct() {
+            fetch("/products/api/products/", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    name: "Laptop",
+                    price: 1500,
+                    category_id: 1
+                })
+            })
+            .then(res => res.json())
+            .then(data => alert(JSON.stringify(data)))
+            .catch(err => alert("Error: " + err));
+        }
+    </script>
 </body>
 </html>
