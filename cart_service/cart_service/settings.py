@@ -23,7 +23,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 ]
-ROOT_URLCONF = 'auth_service.urls'
+ROOT_URLCONF = 'cart_service.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -39,7 +39,7 @@ TEMPLATES = [
         },
     },
 ]
-WSGI_APPLICATION = 'auth_service.wsgi.application'
+WSGI_APPLICATION = 'cart_service.wsgi.application'
 
 DATABASES = {
     'default': {
