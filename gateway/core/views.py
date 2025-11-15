@@ -1,11 +1,9 @@
+import requests
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 def index(request):
     return render(request, "index.html")
-
-import requests
-from django.http import HttpResponse, JsonResponse
 
 # Mapeo de servicios internos
 CONTAINERS = {
