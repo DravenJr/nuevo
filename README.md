@@ -1,4 +1,3 @@
-
 # Tienda de Microservicios Django - Estructura Básica
 
 Este repositorio contiene una arquitectura básica de microservicios implementada con Django y Django REST Framework,
@@ -30,12 +29,13 @@ Se incluye RabbitMQ para la mensajería (pedidos -> notificaciones).
 2. Desde la raíz del repositorio, ejecute:
 
 ```bash
+./bash.sh
 
 docker compose up --build
 
 ```
-3. El HTML de la puerta de enlace se sirve en `http://localhost:8000/` (servicio de puerta de enlace).
-4. Tokens de autenticación: POST `/api/token/` en auth_service (host `auth:8000` internamente; la puerta de enlace muestra las URL).
+3. El HTML del gateway se sirve en `http://localhost:8000/` (servicio de gateway).
+4. Tokens de autenticación: POST `/api/token/` en auth_service (host `auth:8000` internamente; el gateway muestra las URL).
 
 ## Notas / Próximos pasos
 

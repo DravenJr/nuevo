@@ -1,11 +1,14 @@
-
 from django.urls import path
-from . import views
+from .views import (CategoryListCreate, CategoryRetrieveUpdateDestroy, CategoryProductsList, ProductListCreate, ProductRetrieveUpdateDestroy
+)
 
 urlpatterns = [
-    path('health/', views.health),
-    path('categories/', views.CategoryListCreate.as_view()),
-    path('categories/<int:pk>/', views.CategoryRetrieveUpdateDestroy.as_view()),
-    path('products/', views.ProductListCreate.as_view()),
-    path('products/<int:pk>/', views.ProductRetrieveUpdateDestroy.as_view()),
+    # Categorías
+    path('categories/', CategoryListCreate.as_view()),
+    path('categories/<int:pk>/', CategoryRetrieveUpdateDestroy.as_view()),
+    path('categories/<int:category_id>/products/', CategoryProductsList.as_view()),
+
+    # Productos
+    path('products/', ProductListCreate.as_view()),
+    path('products/<int:pk>/', ProductRetrieveUpdateDestroy.as_view()),
 ]

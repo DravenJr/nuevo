@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gateway de Microservicios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .service {
+            background-color: #fff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .service h2 {
+            margin-top: 0;
+            color: #007BFF;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            margin: 5px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #333;
+            background-color: #e7e7e7;
+            padding: 6px 12px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        a:hover {
+            background-color: #007BFF;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gateway de Microservicios</h1>
+
+    <div class="service">
+        <ul>
+            <li><a href="http://localhost:8001/api/register/">Registrarse</a></li>
+            <li><a href="http://localhost:8001/api/token/">Iniciar sesión</a></li>
+        </ul>
+    </div>
+
+    <div class="service">
+        <ul>
+            <li><a href="http://localhost:8003/api/cart/">Lista de Carritos</a></li>
+            <li><a href="http://localhost:8003/api/cart/1/">Detalles de Carrito</a></li>
+        </ul>
+    </div>
+
+    <div class="service">
+        <ul>
+            <li><a href="http://localhost:8004/api/orders/">Crear Orden</a></li>
+            <li><a href="http://localhost:8004/api/orders/1/">Detalles de Orden</a></li>
+        </ul>
+    </div>
+
+    <div class="service">
+        <h2>Products Service</h2>
+        <ul>
+            <li><a href="http://localhost:8002/api/categories/">Ver o crear categoria</a></li>
+            <li><a href="http://localhost:8002/api/categories/1/">Detalles de Categoría</a></li>
+            <li><a href="http://localhost:8002/api/products/">Ver o crear producto</a></li>
+            <li><a href="http://localhost:8002/api/products/1/">Detalles de Producto</a></li>
+        </ul>
+    </div>
+
+</body>
+</html>

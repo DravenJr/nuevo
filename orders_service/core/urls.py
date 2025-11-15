@@ -1,9 +1,10 @@
-
 from django.urls import path
-from . import views
+from .views import OrderListCreateView, OrderRetrieveUpdateDestroyView
 
 urlpatterns = [
-    path('health/', views.health),
-    path('orders/', views.OrderCreateView.as_view()),
-    path('orders/<int:pk>/', views.OrderDetailView.as_view()),
+    # Listar todas las órdenes y crear una nueva
+    path('orders/', OrderListCreateView.as_view(), name='order-list-create'),
+
+    # Obtener, actualizar o eliminar una orden específica
+    path('orders/<int:pk>/', OrderRetrieveUpdateDestroyView.as_view(), name='order-detail'),
 ]
