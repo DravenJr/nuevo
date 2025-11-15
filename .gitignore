@@ -2,7 +2,7 @@
 __pycache__/
 *.pyc
 *.sqlite3
-.env.example
+.env
 venv/
 node_modules/
 docker-compose.override.yml
