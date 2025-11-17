@@ -60,6 +60,7 @@ services:
       - ./auth_service/.env
     depends_on:
       - mysql_auth
+      - rabbitmq
     ports:
       - "${AUTH_SERVICE_PORT}:8000"
 
