@@ -1,38 +1,76 @@
 import requests
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, redirect
 
 def index(request):
     return render(request, "index.html")
 
-# Mapeo de servicios internos
-CONTAINERS = {
-    "auth": "http://auth_service:8000",
-    "products": "http://products_service:8000",
-    "cart": "http://cart_service:8000",
-    "orders": "http://orders_service:8000",
-}
+AUTH_SERVICE = "http://auth_service:8000"
 
-def proxy_request(request, service_name, path=""):
-    if service_name not in CONTAINERS:
-        return JsonResponse({"error": "Servicio no encontrado"}, status=404)
-    
-    url = f"{CONTAINERS[service_name]}/{path}"
-    
-    try:
-        resp = requests.request(
-            method=request.method,
-            url=url,
-            headers={k: v for k, v in request.headers.items() if k != 'Host'},
-            data=request.body,
-            params=request.GET,
-            timeout=10
-        )
-    except requests.exceptions.RequestException as e:
-        return JsonResponse({"error": str(e)}, status=500)
-    
-    response = HttpResponse(resp.content, status=resp.status_code)
-    for key, value in resp.headers.items():
-        response[key] = value
-    return response
+def login_view(request):
+    if request.method == "GET":
+        return render(request, "login.html")
+
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        response = requests.post(f"{AUTH_SERVICE}/login/", data={
+            "username": username,
+            "password": password
+        })
+
+        if response.status_code != 200:
+            return render(request, "login.html", {
+                "error": "Credenciales incorrectas"
+            })
+
+        data = response.json()
+
+        # Guardar tokens en la sesión del gateway
+        request.session["access"] = data["access"]
+        request.session["refresh"] = data["refresh"]
+        request.session["username"] = data["user"]["username"]
+
+        return redirect("home")
+
+def register_view(request):
+    if request.method == "GET":
+        return render(request, "register.html")
+
+    if request.method == "POST":
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        response = requests.post(f"{AUTH_SERVICE}/register/", data={
+            "username": username,
+            "email": email,
+            "password": password
+        })
+
+        if response.status_code != 201:
+            return render(request, "register.html", {
+                "error": "No se pudo registrar el usuario"
+            })
+
+        return redirect("login")
+
+def logout_view(request):
+    refresh = request.session.get("refresh")
+    access = request.session.get("access")
+
+    if refresh and access:
+        try:
+            requests.post(
+                f"{AUTH_SERVICE}/logout/",
+                data={"refresh": refresh},
+                headers={"Authorization": f"Bearer {access}"}
+            )
+        except Exception:
+            pass  # falló, pero igual cerramos sesión en el gateway
+
+    request.session.flush()
+    return redirect("home")
+
+
 

@@ -14,6 +14,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'core',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

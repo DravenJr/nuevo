@@ -1,10 +1,9 @@
 from django.urls import path
-from .views import index, proxy_request
+from .views import index, login_view, register_view, logout_view
 
 urlpatterns = [
-    path('', index, name='index'),
-    path('auth/<path:path>/', lambda r, path: proxy_request(r, "auth", path)),
-    path('products/<path:path>/', lambda r, path: proxy_request(r, "products", path)),
-    path('cart/<path:path>/', lambda r, path: proxy_request(r, "cart", path)),
-    path('orders/<path:path>/', lambda r, path: proxy_request(r, "orders", path)),
+    path('', index, name="home"),
+    path('login/', login_view, name="login"),
+    path('register/', register_view, name="register"),
+    path('logout/', logout_view, name="logout"),
 ]

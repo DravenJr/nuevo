@@ -40,4 +40,3 @@ if not User.objects.filter(username='admin').exists(): \
 
 docker compose ps
 echo "Listo! Puedes acceder al Gateway en http://localhost:8000/"
-echo "Para detener todo: docker compose down"
