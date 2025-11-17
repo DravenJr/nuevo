@@ -42,7 +42,7 @@ def register_view(request):
         email = request.POST.get("email")
         password = request.POST.get("password")
 
-        response = requests.post(f"{AUTH_SERVICE}/register/", data={
+        response = requests.post(f"{AUTH_SERVICE}/register/", json={
             "username": username,
             "email": email,
             "password": password
