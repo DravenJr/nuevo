@@ -3,3 +3,4 @@ djangorestframework
 mysqlclient
 djangorestframework-simplejwt
 gunicorn
+pika
