@@ -42,14 +42,11 @@ def register_view(request):
         email = request.POST.get("email")
         password = request.POST.get("password")
 
-        response = requests.post(f"{AUTH_SERVICE}/register/", data={
+        response = requests.post(f"{AUTH_SERVICE}/register/", json={
             "username": username,
             "email": email,
             "password": password
-})
-
-print("STATUS:", response.status_code)
-print("BODY:", response.text)
+        })
 
         if response.status_code != 201:
             return render(request, "register.html", {
