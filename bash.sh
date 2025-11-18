@@ -17,21 +17,19 @@ docker compose up -d mysql_auth mysql_products mysql_orders mysql_cart rabbitmq
 
 echo "Esperando que MySQL esté listo..."
 for db_service in mysql_auth mysql_products mysql_orders mysql_cart; do
-    echo "Esperando que $db_service esté listo..."
+    echo "Esperando $db_service..."
     until docker compose exec $db_service mysqladmin ping -h "localhost" --silent; do
-        echo "Esperando $db_service..."
         sleep 2
     done
 done
 
+echo "Aplicando migraciones (ANTES de levantar servicios)"
+for service in auth_service products_service orders_service cart_service; do
+    docker compose run --rm $service python manage.py migrate
+done
 
 echo "Levantando microservicios y gateway"
 docker compose up -d auth_service products_service cart_service orders_service gateway
-
-echo "Aplicando migraciones"
-for service in auth_service products_service orders_service cart_service; do
-    docker compose exec $service python manage.py migrate || true
-done
 
 echo "Creando superusuario admin / adminpass"
 docker compose exec auth_service python manage.py shell -c "from django.contrib.auth import get_user_model; User=get_user_model(); \

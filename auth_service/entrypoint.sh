@@ -1,18 +1,12 @@
 #!/bin/bash
 set -e
 
-echo "Esperando a MySQL en $DB_HOST:$DB_PORT..."
-
-# esperar a MySQL
+echo "Esperando a MySQL..."
 until mysqladmin ping -h"$DB_HOST" -P"$DB_PORT" --silent; do
   sleep 1
 done
 
-echo "MySQL está listo!"
-
-# Migraciones
-echo "Aplicando migraciones..."
-python manage.py migrate --noinput
+echo "MySQL listo!"
 
 # Crear superusuario si no existe
 echo "Creando superusuario por defecto si no existe..."
