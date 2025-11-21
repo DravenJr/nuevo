@@ -47,6 +47,12 @@ def register_view(request):
             "email": email,
             "password": password
         })
+        
+        print("STATUS:", response.status_code)
+        try:
+            print("JSON:", response.json())
+        except:
+            print("TEXT:", response.text)
 
         if response.status_code != 201:
             return render(request, "register.html", {
