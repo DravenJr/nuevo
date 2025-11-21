@@ -8,6 +8,9 @@ done
 
 echo "MySQL listo!"
 
+echo "Aplicando migraciones..."
+python manage.py migrate --noinput
+
 # Crear superusuario si no existe
 echo "Creando superusuario por defecto si no existe..."
 python manage.py shell <<EOF
