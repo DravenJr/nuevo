@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 def index(request):
     return render(request, "index.html")
 
-AUTH_SERVICE = "http://auth_service:8000"
+AUTH_SERVICE = "http://auth_service:8001"
 
 def login_view(request):
     if request.method == "GET":
